@@ -929,6 +929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8007466312498025151}
   - component: {fileID: 6413013834153556191}
+  - component: {fileID: 9189730542031790628}
   m_Layer: 0
   m_Name: PFB_Astronaut
   m_TagString: Untagged
@@ -974,6 +975,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &9189730542031790628
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8835229685202505509}
+  m_Enabled: 1
+  m_SortingLayerID: -1159949063
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1001 &2987335437580250577
 PrefabInstance:
   m_ObjectHideFlags: 0
