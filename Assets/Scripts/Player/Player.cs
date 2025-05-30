@@ -8,25 +8,14 @@ public class Player : MonoBehaviour
 	public Rigidbody2D myRigidbody;
 	public HealthBase healthBase;
 
-	[Header("Speed Setup")]
-	public Vector2 friction = new Vector2(.1f, 0);
-	public float speed;
-	public float speedRun;
-	public float forceJump = 2;
-
-	[Header("Animation Setup")]
-	public float jumpScaleY = 1.5f;
-	public float jumpScaleX = 0.7f;
-	public float animationDuration = 0.3f;
-	public Ease ease = Ease.OutBack;
-
-	[Header("Animation player Setup")]
-	public string boolRun = "Run";
-	public string triggerDeath = "Death";
-	public Animator animator;
-	public float playerSwipeDuration = .1f;
+	[Header("Setup")]
+	public SOPlayer soPlayerSetup;
+	
+	//public Animator animator;
 
 	private float _currentSpeed;
+
+	private Animator _currentPlayer;
 
 
 	private void Awake()
@@ -35,12 +24,14 @@ public class Player : MonoBehaviour
 		{
 			healthBase.OnKill += OnPlayerKill;
 		}
+
+		_currentPlayer = Instantiate(soPlayerSetup.player, transform);
 	}
 
 	private void OnPlayerKill()
 	{
 		healthBase.OnKill -= OnPlayerKill;
-		animator.SetTrigger(triggerDeath);
+		_currentPlayer.SetTrigger(soPlayerSetup.triggerDeath);
 
 	}
 
@@ -57,13 +48,13 @@ public class Player : MonoBehaviour
 
 	if(Input.GetKey(KeyCode.LeftControl))
 	{
-		_currentSpeed = speedRun;
-		animator.speed = 3;
+		_currentSpeed = soPlayerSetup.speedRun;
+		_currentPlayer.speed = 3;
 	}
 	else 
 	{
-		_currentSpeed = speed;
-		animator.speed = 1;
+		_currentSpeed = soPlayerSetup.speed;
+		_currentPlayer.speed = 1;
 	}
 
 	
@@ -74,9 +65,9 @@ public class Player : MonoBehaviour
 		myRigidbody.velocity = new Vector2(-_currentSpeed, myRigidbody.velocity.y);
 		if(myRigidbody.transform.localScale.x != -1)
 		{
-			myRigidbody.transform.DOScaleX(-1, playerSwipeDuration);
+			myRigidbody.transform.DOScaleX(-1, soPlayerSetup.playerSwipeDuration);
 		}
-		animator.SetBool(boolRun, true);
+		_currentPlayer.SetBool(soPlayerSetup.boolRun, true);
 	}
 	else if(Input.GetKey(KeyCode.RightArrow))
 	{
@@ -84,23 +75,23 @@ public class Player : MonoBehaviour
 		myRigidbody.velocity = new Vector2(_currentSpeed, myRigidbody.velocity.y);
 		if(myRigidbody.transform.localScale.x != 1)
 		{
-			myRigidbody.transform.DOScaleX(1, playerSwipeDuration);
+			myRigidbody.transform.DOScaleX(1, soPlayerSetup.playerSwipeDuration);
 		}
 		myRigidbody.transform.localScale = new Vector3(1 ,1 ,1);
-		animator.SetBool(boolRun, true);
+		_currentPlayer.SetBool(soPlayerSetup.boolRun, true);
 	}
 	else
 	{
-		animator.SetBool(boolRun, false);
+		_currentPlayer.SetBool(soPlayerSetup.boolRun, false);
 	}
 
 	if(myRigidbody.velocity.x > 0)
 	{
-		myRigidbody.velocity += friction;
+		myRigidbody.velocity += soPlayerSetup.friction;
 	}
 	else if (myRigidbody.velocity.x < 0)
 	{
-		myRigidbody.velocity -= friction;
+		myRigidbody.velocity -= soPlayerSetup.friction;
 	}
    }
 
@@ -108,7 +99,7 @@ public class Player : MonoBehaviour
    {
 	if(Input.GetKeyDown(KeyCode.Space))
 	{
-		myRigidbody.velocity = Vector2.up * forceJump;
+		myRigidbody.velocity = Vector2.up * soPlayerSetup.forceJump;
 		myRigidbody.transform.localScale = Vector2.one;
 
 		DOTween.Kill(myRigidbody.transform);
@@ -118,8 +109,8 @@ public class Player : MonoBehaviour
 
    private void HandleScaleJump()
    {
-		  myRigidbody.transform.DOScaleY(jumpScaleY, animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(ease);
-		  myRigidbody.transform.DOScaleX(jumpScaleX, animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(ease);
+		  myRigidbody.transform.DOScaleY(soPlayerSetup.jumpScaleY, soPlayerSetup.animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
+		  myRigidbody.transform.DOScaleX(soPlayerSetup.jumpScaleX, soPlayerSetup.animationDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerSetup.ease);
    }
 
    public void DestroyMe()
