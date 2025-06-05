@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 6413013834153556191}
   - component: {fileID: 7147965513809741147}
   - component: {fileID: 4093634171590139501}
-  - component: {fileID: 8657396068114225176}
+  - component: {fileID: -6627399828145397745}
   m_Layer: 0
   m_Name: PFB_Astronaut
   m_TagString: Untagged
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   - {fileID: 4989476794605110809}
   color: {r: 1, g: 0, b: 0, a: 1}
   duration: 0.1
---- !u!114 &8657396068114225176
+--- !u!114 &-6627399828145397745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
